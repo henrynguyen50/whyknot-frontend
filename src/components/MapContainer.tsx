@@ -11,11 +11,24 @@ interface MapContainerProps {
 
 export function MapContainer({ center, category, onAreaClick }: MapContainerProps) {
   const mapRef = useRef<L.Map | null>(null);
-  const heatLayerRef = useRef<L.HeatLayer | null>(null);
+  const heatLayerRef = useRef<any>(null);
 
   useEffect(() => {
     if (!mapRef.current) {
-      mapRef.current = L.map('map').setView(center, 13);
+      // United States bounds only 
+      const usSouthWest = L.latLng(24.396308, -124.848974); // lat, lng
+      const usNorthEast = L.latLng(49.384358, -66.885444);
+      const usBounds = L.latLngBounds(usSouthWest, usNorthEast);
+
+      mapRef.current = L.map('map', {
+        center,
+        zoom: 13,
+        minZoom: 3,
+        maxZoom: 19,
+        maxBounds: usBounds,
+        // Prevent the user from panning far outside the bounds
+        maxBoundsViscosity: 0.9,
+      });
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors',
@@ -59,9 +72,9 @@ export function MapContainer({ center, category, onAreaClick }: MapContainerProp
         maxZoom: 17,
         max: 1.0,
         gradient: {
-          0.0: '#0000ff',
-          0.5: '#00ff00',
-          0.75: '#ffff00',
+          0.0: '#ffffffff',
+          0.5: '#8d3434ff',
+          0.75: '#e11b1bff',
           1.0: '#ff0000'
         }
       }).addTo(mapRef.current);
