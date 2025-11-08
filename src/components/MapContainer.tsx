@@ -24,7 +24,7 @@ export function MapContainer({ center, category, onAreaClick }: MapContainerProp
         center,
         zoom: 13,
         minZoom: 3,
-        maxZoom: 19,
+        maxZoom: 15,
         maxBounds: usBounds,
         // Prevent the user from panning far outside the bounds
         maxBoundsViscosity: 0.9,
@@ -72,9 +72,10 @@ export function MapContainer({ center, category, onAreaClick }: MapContainerProp
         maxZoom: 17,
         max: 1.0,
         gradient: {
-          0.0: '#ffffffff',
-          0.5: '#8d3434ff',
-          0.75: '#e11b1bff',
+          0.0: '#0000ff',
+          0.25: '#00bfffff',
+          0.5: '#ffff00',
+          0.75: '#ff8c00',
           1.0: '#ff0000'
         }
       }).addTo(mapRef.current);
